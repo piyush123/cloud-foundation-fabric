@@ -33,7 +33,7 @@ module "tf-project" {
 # per-environment service accounts
 
 module "tf-service-accounts" {
-  source     = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/iam-service-accounts"
+  source     = "git@github.com:nephosolutions/iam-service-account/google"
   project_id = module.tf-project.project_id
   names      = var.environments
   prefix     = var.prefix
