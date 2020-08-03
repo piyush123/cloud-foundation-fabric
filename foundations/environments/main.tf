@@ -33,7 +33,8 @@ module "tf-project" {
 # per-environment service accounts
 
 module "tf-service-accounts" {
-  source     = "git@github.com:nephosolutions/iam-service-account/google"
+  source  = "nephosolutions/iam-service-account/google"
+  version = "3.1.0"
   project_id = module.tf-project.project_id
   names      = var.environments
   prefix     = var.prefix
