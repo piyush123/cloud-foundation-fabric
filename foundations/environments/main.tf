@@ -105,24 +105,6 @@ module "environment-folders" {
 
 # audit logs project
 
-module "audit-project" {
-  source          = "../../modules/project"
-  name            = "audit"
-  parent          = var.root_node
-  prefix          = var.prefix
-  billing_account = var.billing_account_id
-  iam_members = {
-    "roles/bigquery.dataEditor" = [module.audit-log-sinks.writer_identities[0]]
-    "roles/viewer"              = var.iam_audit_viewers
-  }
-  iam_roles = [
-    "roles/bigquery.dataEditor",
-    "roles/viewer"
-  ]
-  services = concat(var.project_services, [
-    "bigquery.googleapis.com",
-  ])
-}
 
 # audit logs dataset and sink
 
@@ -148,6 +130,26 @@ module "audit-log-sinks" {
   sinks = {
     audit-logs = var.audit_filter
   }
+}
+
+
+module "audit-project" {
+  source          = "../../modules/project"
+  name            = "audit"
+  parent          = var.root_node
+  prefix          = var.prefix
+  billing_account = var.billing_account_id
+  iam_members = {
+    "roles/bigquery.dataEditor" = [module.audit-log-sinks.writer_identities[0]]
+    "roles/viewer"              = var.iam_audit_viewers
+  }
+  iam_roles = [
+    "roles/bigquery.dataEditor",
+    "roles/viewer"
+  ]
+  services = concat(var.project_services, [
+    "bigquery.googleapis.com",
+  ])
 }
 
 ###############################################################################
