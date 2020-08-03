@@ -33,7 +33,7 @@ module "tf-project" {
 # per-environment service accounts
 
 module "tf-service-accounts" {
-  source  = "../../modules/iam-service-account"
+  source  = "../../modules/iam-service-accounts"
   project_id = module.tf-project.project_id
   names      = var.environments
   prefix     = var.prefix
