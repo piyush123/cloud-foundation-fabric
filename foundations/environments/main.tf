@@ -19,7 +19,7 @@
 # Terraform project
 
 module "tf-project" {
-  source          = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/project"
+  source          = "../../modules/project"
   name            = "terraform"
   parent          = var.root_node
   prefix          = var.prefix
@@ -56,7 +56,7 @@ module "tf-service-accounts" {
 # bootstrap Terraform state GCS bucket
 
 module "tf-gcs-bootstrap" {
-  source     = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/gcs"
+  source     = "../../modules/gcs"
   project_id = module.tf-project.project_id
   names      = ["tf-bootstrap"]
   prefix     = "${var.prefix}-tf"
@@ -66,7 +66,7 @@ module "tf-gcs-bootstrap" {
 # per-environment Terraform state GCS buckets
 
 module "tf-gcs-environments" {
-  source     = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/gcs"
+  source     = "../../modules/gcs"
   project_id = module.tf-project.project_id
   names      = var.environments
   prefix     = "${var.prefix}-tf"
@@ -86,7 +86,7 @@ module "tf-gcs-environments" {
 ###############################################################################
 
 module "environment-folders" {
-  source = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/folders"
+  source = "../../modules/folders"
   parent = var.root_node
   names  = var.environments
   iam_roles = {
@@ -107,7 +107,7 @@ module "environment-folders" {
 # audit logs project
 
 module "audit-project" {
-  source          = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/project"
+  source          = "../../modules/project"
   name            = "audit"
   parent          = var.root_node
   prefix          = var.prefix
@@ -128,7 +128,7 @@ module "audit-project" {
 # audit logs dataset and sink
 
 module "audit-dataset" {
-  source        = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/bigquery-dataset"
+  source        = "../../modules/bigquery-dataset"
   project_id    = module.audit-project.project_id
   id            = "audit_export"
   friendly_name = "Audit logs export."
@@ -141,7 +141,7 @@ module "audit-dataset" {
 }
 
 module "audit-log-sinks" {
-  source = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/logging-sinks"
+  source = "../../modules/logging-sinks"
   parent = var.root_node
   destinations = {
     audit-logs = "bigquery.googleapis.com/${module.audit-dataset.id}"
@@ -159,7 +159,7 @@ module "audit-log-sinks" {
 # see the README file for additional options on managing shared services
 
 module "sharedsvc-project" {
-  source          = "https://github.com/piyush123/cloud-foundation-fabric/tree/master/modules/project"
+  source          = "../../modules/project"
   name            = "sharedsvc"
   parent          = var.root_node
   prefix          = var.prefix
