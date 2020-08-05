@@ -110,7 +110,7 @@ module "audit-project" {
   prefix          = var.prefix
   billing_account = var.billing_account_id
   iam_members = {
-    # "roles/bigquery.dataEditor" = [module.audit-log-sinks.writer_identities[0]]
+   "roles/bigquery.dataEditor" = [module.audit-log-sinks.writer_identities[0]]
     "roles/viewer"              = var.iam_audit_viewers
   }
   iam_roles = [
